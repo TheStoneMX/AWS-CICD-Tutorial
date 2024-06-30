@@ -30,3 +30,4 @@ def handler(event, context):
         "visit_count": new_visit_count,
     }
     return {"statusCode": 200, "body": response_body}
+    
