@@ -28,6 +28,7 @@ jobs:
       - name: Install CDK dependencies
         working-directory: ./
         run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Deploy CDK stack
         working-directory: ./
