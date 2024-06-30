@@ -111,7 +111,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "e78a6b0386738b085901b9a9d4c9e1117c337262a359adea84ff96311a768bce.zip"
+     "S3Key": "6a51fbcfb5446e16ce960ccb2a4fed6d9807bb8cca6f333d0b2d367f72caec0e.zip"
     },
     "Environment": {
      "Variables": {
@@ -136,7 +136,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "AwsCicdTutorialStack/LambdaFunction/Resource",
-    "aws:asset:path": "asset.e78a6b0386738b085901b9a9d4c9e1117c337262a359adea84ff96311a768bce",
+    "aws:asset:path": "asset.6a51fbcfb5446e16ce960ccb2a4fed6d9807bb8cca6f333d0b2d367f72caec0e",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
