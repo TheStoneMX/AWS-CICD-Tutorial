@@ -1,39 +1,49 @@
+# Name of the GitHub Actions workflow
 name: Deploy to AWS (CDK)
 
+# Trigger the workflow on push events to the main branch
 on:
   push:
     branches: 
       - main
 
+# Define the jobs to run in this workflow
 jobs:
   deploy:
+    # Specify the environment to run the job, in this case, the latest version of Ubuntu
     runs-on: ubuntu-latest
 
+    # List of steps to be executed in the job
     steps:
+      # Step to check out the code from the repository
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Step to set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: 18  # Specify the version of Node.js to use
 
+      # Step to cache Node.js dependencies to speed up the workflow
       - name: Cache Node.js dependencies
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles(' ./package-lock.json') }}
+          path: ./node_modules  # Directory to cache
+          key: ${{ runner.os }}-node-${{ hashFiles(' ./package-lock.json') }}  # Unique key based on OS and package-lock.json file
 
+      # Step to install CDK (Cloud Development Kit) dependencies
       - name: Install CDK dependencies
-        working-directory: ./
-        run: npm ci
-        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./  # Directory to run the command in
+        run: npm ci  # Clean install of dependencies
+        if: steps.cache.outputs.cache-hit != 'true'  # Run this step only if the cache was not hit
 
+      # Step to deploy the CDK stack to AWS
       - name: Deploy CDK stack
-        working-directory: ./
-        run: npx cdk deploy --require-approval never
+        working-directory: ./  # Directory to run the command in
+        run: npx cdk deploy --require-approval never  # Deploy the stack without requiring manual approval
         env:
-          AWS_ACCESS_KEY_ID: ${{secrets.BETA_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.BETA_AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "eu-north-1"
+          AWS_ACCESS_KEY_ID: ${{secrets.BETA_AWS_ACCESS_KEY_ID }}  # AWS access key ID from GitHub secrets
+          AWS_SECRET_ACCESS_KEY: ${{secrets.BETA_AWS_SECRET_ACCESS_KEY }}  # AWS secret access key from GitHub secrets
+          AWS_REGION: "eu-north-1"  # AWS region to deploy to
